@@ -1,0 +1,32 @@
+import smtplib,ssl
+import time
+from email.message import EmailMessage
+#----------{abodydz}----------
+port = int(input("port number , if you don't know type 465 :"))
+mail_server = str(input("gmail or hotmail , with port 465 only gmail works ?"))
+log_in = str(input("your email :"))
+email = f"{log_in}"
+log_in_pass = str(input("your password :"))
+password = f"{log_in_pass}"
+subject = str(input("the subject of the massage :"))
+content = str(input("the content :"))
+to = str(input("to :"))
+time.sleep(3)
+#----------{abodydz}----------
+msg = EmailMessage()
+msg["Subject"] = subject
+msg.set_content(content)
+msg["from"] = log_in
+msg["to"] = to
+#----------{abodydz}----------
+con = ssl.create_default_context()
+with smtplib.SMTP_SSL(f"smtp.{mail_server}.com",port,context=con) as smtp:
+    smtp.ehlo()
+    print("connected to the port (:")
+    smtp.login(email,password)
+    print("log in success")
+    smtp.send_message(msg)
+    print("massage has been sent !")
+    print("maid by abodydz")
+    time.sleep(5)
+    smtp.quit()
